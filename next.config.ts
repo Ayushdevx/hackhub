@@ -19,13 +19,12 @@ const nextConfig: NextConfig = {
     unoptimized: true, // For static deployment compatibility
   },
   
-  // Disable static export for now to maintain API routes functionality
-  // Enable this for purely static deployments
-  // output: 'export',
-  // trailingSlash: true,
+  // Static export for deployment
+  output: 'export',
+  trailingSlash: true,
   
-  // For Netlify/Vercel deployment with server functions
-  output: 'standalone',
+  // Remove standalone mode due to Windows symlink issues
+  // output: 'standalone',
   
   // TypeScript configuration - ignore errors for deployment
   typescript: {
