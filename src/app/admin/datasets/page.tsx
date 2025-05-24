@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Circle } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { CircuitBoard, Database } from "lucide-react";
-import { SessionContext } from "@/utils/supabase/usercontext";
 import {
   Table,
   TableBody,
@@ -39,7 +38,6 @@ export default function Datasets() {
     <Card className={`bg-black/50 border ${className}`} {...props} />
   );
   const [isLoaded, setIsLoaded] = useState(false);
-  const sessionData = useContext(SessionContext);
   const router = useRouter();
   const [datasets, setDatasets] = useState<Dataset[]>([
     {

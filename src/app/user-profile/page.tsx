@@ -20,9 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useState, useEffect, useContext } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { SessionContext } from "@/utils/supabase/usercontext";
+import { useState, useEffect } from "react";
 import { UserProfile as UserProfileType } from "@/utils/db_types";
 
 import {
@@ -88,23 +86,12 @@ export default function UserProfile() {
   const [userData, setUserData] = useState<ExtendedUserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
-  const { sessionData } = useContext(SessionContext);
-  const supabase = createClient();
 
   useEffect(() => {
     async function fetchUserData() {
-      if (!sessionData.session?.user) return;
-
-      try {
-        const { data: profile, error: profileError } = await supabase
-          .from("user_profiles")
-          .select("*")
-          .eq("id", sessionData.session.user.id)
-          .single();
-
-        if (profileError) throw profileError;
-
-        // Mock transactions (replace with actual data from your database)
+      // Simulate loading delay
+      setTimeout(() => {
+        // Mock user data
         const mockTransactions = [
           {
             id: "1",
@@ -129,34 +116,47 @@ export default function UserProfile() {
           },
         ];
 
-        setUserData({
-          ...profile,
+        const mockUserData: ExtendedUserProfile = {
+          id: "mock-user-id",
+          full_name: "John Doe",
+          email: "john.doe@example.com",
+          phone: "+1 (555) 123-4567",
+          organization: "Healthcare Corp",
+          role: "Data Scientist",
+          api_key: "hh_mock_key_123456789",
           credits: 1425,
           total_credits: 2000,
+          subscription_tier: "pro",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
           model_usage: [
             { model: "LLM Symptom Analysis", uses: 45, cost: 200 },
             { model: "Pneumonia Detection", uses: 28, cost: 500 },
             { model: "Breast Cancer Screening", uses: 19, cost: 350 },
           ],
-          uuid: sessionData.session.user.id,
-          security_status: profile.role === "admin" ? "verified" : "standard",
+          uuid: "mock-user-id",
+          security_status: "standard",
           transactions: mockTransactions,
           activity_log: [
             "Logged in from New Device - Chrome, Windows",
             "Updated security settings",
             "Changed profile picture",
           ],
-        });
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        toast.error("Failed to load profile data");
-      } finally {
+          usage_stats: {
+            total_api_calls: 1250,
+            models_accessed: 8,
+            data_uploaded_gb: 15.5,
+            predictions_made: 2840
+          }
+        };
+        
+        setUserData(mockUserData);
         setLoading(false);
-      }
+      }, 1000);
     }
 
     fetchUserData();
-  }, [sessionData.session, supabase]);
+  }, []);
 
   const handleCreditPurchase = async (packageId: number) => {
     try {

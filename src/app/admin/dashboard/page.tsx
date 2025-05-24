@@ -33,7 +33,6 @@ import { ExperimentRun, ModelVersion, NodeStatus } from "@/types/index";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
 import { AnimatedNumber } from "./components/animated-number";
-import { SessionContext } from "@/utils/supabase/usercontext";
 import dynamic from "next/dynamic";
 
 const ClusterMap = dynamic(() => import("./components/cluster-map").then(mod => mod.default), {
@@ -77,7 +76,6 @@ export default function AdminDashboard() {
   const [experimentRuns, setExperimentRuns] = useState<ExperimentRun[]>([]);
   const [nodes, setNodes] = useState<NodeStatus[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const sessionData = useContext(SessionContext);
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("overview");
   const [aggregationStatus, setAggregationStatus] = useState<

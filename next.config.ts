@@ -5,8 +5,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Environment variables for deployment
   env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   },
   
@@ -16,10 +14,6 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.supabase.co',
       },
     ],
     unoptimized: true, // For static deployment compatibility

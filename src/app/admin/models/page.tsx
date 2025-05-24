@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Circle, BrainCircuit } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -18,7 +18,6 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Navbar } from "@/components/layout/Navbar";
 import { useRouter } from "next/navigation";
-import { SessionContext } from "@/utils/supabase/usercontext";
 
 export default function Models() {
   type Model = {
@@ -37,7 +36,6 @@ export default function Models() {
   );
   
   const [isLoaded, setIsLoaded] = useState(false);
-  const sessionData = useContext(SessionContext);
   const router = useRouter();
   const [models, setModels] = useState<Model[]>([
     {
