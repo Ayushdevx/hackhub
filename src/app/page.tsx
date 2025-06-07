@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ArrowUpRight, Calendar, Clock, Users, Trophy, Cpu, Github, Linkedin, Mail, Twitter } from "lucide-react";
-import { SplineScene } from "@/components/ui/splite";
+import dynamic from "next/dynamic";
 import { AnimateOnView } from "@/components/AnimateOnView";
 import { motion, useReducedMotion } from "framer-motion";
 import { Toaster } from "sonner";
@@ -20,10 +20,28 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import Threads from "@/components/ui/Threads";
 import "@/components/ui/Threads.css";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import Dock from "@/components/Dock";
+import { Sponsors } from "@/components/Sponsors";
+import { Judges } from "@/components/Judges";
+import { Schedule } from "@/components/Schedule";
+
+// Dynamically import WebGL components to avoid SSR issues
+const Threads = dynamic(() => import("@/components/ui/Threads"), {
+  ssr: false,
+  loading: () => <div className="fixed inset-0 z-0 bg-black" />,
+});
+
+// Dynamically import SplineScene to avoid SSR issues
+const SplineScene = dynamic(() => import("@/components/ui/splite").then(mod => ({ default: mod.SplineScene })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-gray-100/10">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-cyan-400"></div>
+    </div>
+  ),
+});
 
 // Memoized components
 const MemoizedNavbar = memo(Navbar);
@@ -137,7 +155,7 @@ export default function Index() {
   return (
     <ErrorBoundary>
       <MemoizedNavbar />
-      <main className={`min-h-screen bg-black ${isLoaded ? "opacity-100" : "opacity-0"} transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-x-hidden`}>
+      <main className={`min-h-screen bg-black ${isLoaded ? "opacity-100" : "opacity-0"} transition-all duration-700 ease-out overflow-x-hidden`}>
         <div className="fixed inset-0 z-0 bg-black">
           <Threads
             color={[0.2, 0.4, 0.8]}
@@ -319,7 +337,7 @@ export default function Index() {
           </section>
 
           {/* Prize Showcase Section */}
-          <section ref={prizesSectionRef} className="relative py-20">
+          <section id="prizes" ref={prizesSectionRef} className="relative py-20">
             <motion.div
               className="container mx-auto px-4"
               initial={{ opacity: 0, y: 40 }}
@@ -348,76 +366,59 @@ export default function Index() {
                 viewport={{ once: true }}
               >
                 <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-300 to-purple-400 text-transparent bg-clip-text">
-                  Prize Pool
+                  HackHub Awards & Prizes
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                  70% of total participation fees (₹99 per participant)
+                  Recognizing excellence in innovation, coding, and creativity
                 </p>
               </motion.div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                <CardSpotlight className="bg-gray-900/50 backdrop-blur-xl">
+                <CardSpotlight className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/30 backdrop-blur-xl">
                   <div className="relative z-10">
-                    <div className="text-4xl mb-4"></div>
-                    <h3 className="text-xl font-bold mb-2 text-white">First Place</h3>
-                    <p className="text-gray-400 mb-4">40% of Prize Pool</p>
+                    <div className="text-4xl mb-4">🏆</div>
+                    <h3 className="text-2xl font-bold mb-2 text-yellow-400">1st Place – Champion</h3>
+                    <p className="text-yellow-300 mb-4 font-semibold">20% of Total Prize Pool</p>
                     <ul className="text-sm text-gray-300 space-y-2">
-                      <li>• Cash reward</li>
-                      <li>• Winner Certificate</li>
-                      <li>• Priority for internship consideration</li>
+                      <li>• Champion Certificate</li>
+                      <li>• Swag Pack</li>
+                      <li>• Priority Internship Opportunity</li>
                     </ul>
                   </div>
                 </CardSpotlight>
 
-                <CardSpotlight className="bg-gray-900/50 backdrop-blur-xl">
+                <CardSpotlight className="bg-gradient-to-br from-silver-500/10 to-gray-500/5 border-gray-400/30 backdrop-blur-xl">
                   <div className="relative z-10">
-                    <div className="text-4xl mb-4"></div>
-                    <h3 className="text-xl font-bold mb-2 text-white">Second Place</h3>
-                    <p className="text-gray-400 mb-4">20% of Prize Pool</p>
+                    <div className="text-4xl mb-4">🥈</div>
+                    <h3 className="text-2xl font-bold mb-2 text-gray-300">2nd Place – Tech Trailblazer</h3>
+                    <p className="text-gray-300 mb-4 font-semibold">15% of Total Prize Pool</p>
                     <ul className="text-sm text-gray-300 space-y-2">
-                      <li>• Cash reward</li>
-                      <li>• Runner-up Certificate</li>
-                      <li>• Priority for internship consideration</li>
+                      <li>• Excellence Certificate</li>
+                      <li>• Swag Pack</li>
                     </ul>
                   </div>
                 </CardSpotlight>
 
-                <CardSpotlight className="bg-gray-900/50 backdrop-blur-xl">
+                <CardSpotlight className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/30 backdrop-blur-xl">
                   <div className="relative z-10">
-                    <div className="text-4xl mb-4"></div>
-                    <h3 className="text-xl font-bold mb-2 text-white">Third Place</h3>
-                    <p className="text-gray-400 mb-4">10% of Prize Pool</p>
+                    <div className="text-4xl mb-4">🥉</div>
+                    <h3 className="text-2xl font-bold mb-2 text-orange-400">3rd Place – Code Innovator</h3>
+                    <p className="text-orange-300 mb-4 font-semibold">10% of Total Prize Pool</p>
                     <ul className="text-sm text-gray-300 space-y-2">
-                      <li>• Cash reward</li>
                       <li>• Merit Certificate</li>
-                      <li>• Internship shortlisting</li>
                     </ul>
                   </div>
                 </CardSpotlight>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <CardSpotlight className="bg-gray-900/50 backdrop-blur-xl">
-                  <div className="relative z-10">
-                    <div className="text-4xl mb-4"></div>
-                    <h3 className="text-xl font-bold mb-2 text-white">Swag Star Award</h3>
-                    <p className="text-gray-400 mb-4">Special Recognition</p>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li>• Swag pack (Goodies)</li>
-                      <li>• Certificate</li>
-                      <li>• Given for creativity, teamwork, or presentation</li>
-                    </ul>
-                  </div>
-                </CardSpotlight>
-
-                <CardSpotlight className="bg-gray-900/50 backdrop-blur-xl">
-                  <div className="relative z-10">
-                    <div className="text-4xl mb-4"></div>
-                    <h3 className="text-xl font-bold mb-2 text-white">Community Choice</h3>
-                    <p className="text-gray-400 mb-4">Public Recognition</p>
-                    <ul className="text-sm text-gray-300 space-y-2">
-                      <li>• Certificate</li>
-                      <li>• Bonus swag (if available)</li>
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-md mx-auto">
+                <CardSpotlight className="bg-gradient-to-br from-purple-500/10 to-pink-500/5 border-purple-500/30 backdrop-blur-xl">
+                  <div className="relative z-10 text-center">
+                    <div className="text-4xl mb-4">🌟</div>
+                    <h3 className="text-xl font-bold mb-2 text-purple-400">Community Choice Award</h3>
+                    <p className="text-purple-300 mb-4">Public Recognition</p>
+                    <ul className="text-sm text-gray-300 space-y-2 text-left">
+                      <li>• Certificate + Bonus Swag</li>
                       <li>• Based on public poll voting</li>
                     </ul>
                   </div>
@@ -464,6 +465,15 @@ export default function Index() {
               </motion.div>
             </motion.div>
           </section>
+
+          {/* Schedule Section */}
+          <Schedule />
+
+          {/* Sponsors Section */}
+          <Sponsors />
+
+          {/* Judges Section */}
+          <Judges />
 
           {/* Join Section */}
           <section ref={joinSectionRef} className="relative py-20">
