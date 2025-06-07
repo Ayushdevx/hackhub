@@ -299,11 +299,10 @@ export function Schedule() {
                     className="relative flex items-start gap-8 cursor-pointer"
                     onClick={() => setSelectedEvent(isSelected ? null : item.id)}
                   >
-                    {/* Enhanced Timeline Dot */}
-                    <motion.div 
+                    {/* Enhanced Timeline Dot */}                    <motion.div 
                       className={`relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center shadow-2xl ${item.glowColor} flex-shrink-0 border-4 border-white/20`}
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.6 }}
+                      whileHover={{ scale: 1.15, rotate: 15 }}
+                      transition={{ duration: 0.3 }}
                       animate={isActive ? { 
                         scale: [1, 1.1, 1],
                         boxShadow: [
@@ -493,11 +492,10 @@ export function Schedule() {
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ delay: index * 0.2 }}
-                >
-                  <motion.div
+                >                  <motion.div
                     className="mb-6"
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.6 }}
+                    whileHover={{ scale: 1.15, rotate: 12 }}
+                    transition={{ duration: 0.3 }}
                   >
                     {info.icon}
                   </motion.div>
