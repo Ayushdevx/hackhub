@@ -144,6 +144,7 @@ export function Schedule() {
   const [selectedEvent, setSelectedEvent] = useState<number | null>(null);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [currentProgress, setCurrentProgress] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   
@@ -151,9 +152,13 @@ export function Schedule() {
     target: timelineRef,
     offset: ["start end", "end start"]
   });
-
   const progressOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   const progressHeight = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"]);
+
+  // Client-side only effect
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Auto-advance through timeline events
   useEffect(() => {
@@ -184,30 +189,31 @@ export function Schedule() {
       <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_20%,rgba(99,102,241,0.15),transparent_70%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_80%,rgba(139,92,246,0.15),transparent_70%)]" />
-      
-      {/* Animated particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400/40 rounded-full"
-            animate={{
-              x: [0, Math.random() * 1000],
-              y: [0, Math.random() * 800],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-            style={{
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-            }}
-          />
-        ))}
-      </div>
+        {/* Animated particles */}
+      {isClient && (
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-cyan-400/40 rounded-full"
+              animate={{
+                x: [0, (i * 50) % 1000],
+                y: [0, (i * 40) % 800],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 10 + (i % 5),
+                repeat: Infinity,
+                delay: i * 0.5,
+              }}
+              style={{
+                left: (i * 5) % 100 + "%",
+                top: (i * 4) % 100 + "%",
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <motion.div
         className="container mx-auto px-4 relative z-10"
