@@ -23,6 +23,36 @@ export default function ChatAgentPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Helper function to check if a message is a simple math problem
+  const isSimpleMath = (text: string): boolean => {
+    // Check for basic math patterns like "12+45", "5*3", "10-2", "20/4"
+    const mathPattern = /^\s*\d+\s*[\+\-\*\/]\s*\d+\s*$/;
+    return mathPattern.test(text);
+  };
+
+  // Helper function to evaluate simple math expressions
+  const evaluateSimpleMath = (expression: string): string => {
+    try {
+      const cleanExpression = expression.replace(/\s/g, '');
+      
+      // Basic validation to ensure only numbers and operators
+      if (!/^[\d\+\-\*\/\.]+$/.test(cleanExpression)) {
+        return "I can only solve basic arithmetic with numbers and +, -, *, / operators.";
+      }
+      
+      // Use Function constructor for safe evaluation (limited to math operations)
+      const result = Function('"use strict"; return (' + cleanExpression + ')')();
+      
+      if (isNaN(result) || !isFinite(result)) {
+        return "That doesn't seem to be a valid calculation.";
+      }
+      
+      return `${expression} = ${result}`;
+    } catch (error) {
+      return "I couldn't calculate that. Please check your math expression.";
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() === '' && !file) return;
@@ -32,6 +62,14 @@ export default function ChatAgentPage() {
     const newMessages = [...messages, { role: 'user', content: userMessage }];
     setMessages(newMessages);
     setIsLoading(true);
+
+    // Check if it's a simple math problem and handle locally
+    if (isSimpleMath(userMessage) && !file) {
+      const mathResult = evaluateSimpleMath(userMessage);
+      setMessages([...newMessages, { role: 'assistant', content: mathResult }]);
+      setIsLoading(false);
+      return;
+    }
 
     const formData = new FormData();
     if (userMessage) formData.append('message', userMessage);
@@ -44,11 +82,31 @@ export default function ChatAgentPage() {
       });
 
       const data = await response.json();
-      setMessages([...newMessages, { role: 'assistant', content: data.response }]);
+      
+      // Check if the response indicates the AI can't handle the request
+      if (data.response && data.response.includes("I don't have access to information about simple math problems")) {
+        // Fallback for math problems that the AI couldn't handle
+        if (isSimpleMath(userMessage)) {
+          const mathResult = evaluateSimpleMath(userMessage);
+          setMessages([...newMessages, { role: 'assistant', content: mathResult }]);
+        } else {
+          setMessages([...newMessages, { role: 'assistant', content: "I'm having trouble accessing my knowledge base right now. Please try rephrasing your question or try again later." }]);
+        }
+      } else {
+        setMessages([...newMessages, { role: 'assistant', content: data.response }]);
+      }
+      
       setFile(null); // Clear file after sending
     } catch (error) {
       console.error('Error sending message:', error);
-      setMessages([...newMessages, { role: 'assistant', content: 'Sorry, there was an error processing your request.' }]);
+      
+      // If there's an error and it's a simple math problem, provide local calculation
+      if (isSimpleMath(userMessage)) {
+        const mathResult = evaluateSimpleMath(userMessage);
+        setMessages([...newMessages, { role: 'assistant', content: `The service is currently unavailable, but I can help with this math problem: ${mathResult}` }]);
+      } else {
+        setMessages([...newMessages, { role: 'assistant', content: 'Sorry, there was an error processing your request. Please try again later.' }]);
+      }
     } finally {
       setIsLoading(false);
     }
