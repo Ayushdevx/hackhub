@@ -13,7 +13,7 @@ const judges = [
     location: "California, USA",
     expertise: ["Applied Science", "Machine Learning", "Team Leadership"],
     bio: "Senior Applied Scientist and Team Lead at Oracle with extensive experience in developing enterprise-scale AI solutions and leading cross-functional teams.",
-    image: "/judges/hitesh-patel.jpg",
+    image: "/judge1.jpg",
     achievements: "Enterprise AI Solutions, Team Leadership",
     social: {
       linkedin: "https://linkedin.com/in/hiteshpatel",
@@ -32,7 +32,7 @@ const judges = [
     location: "San Francisco, CA",
     expertise: ["Application Development", "Scalable Systems", "Mobile Technology"],
     bio: "Senior Application Developer at Uber Technologies, specializing in building scalable ride-sharing and delivery platforms that serve millions of users globally.",
-    image: "/judges/satwik-jambula.jpg",
+    image: "/judge1.jpg",
     achievements: "Scalable Platform Development, Mobile Apps",
     social: {
       linkedin: "https://linkedin.com/in/satwikjambula",
@@ -51,7 +51,7 @@ const judges = [
     location: "Massachusetts, USA",
     expertise: ["Cybersecurity", "Security Consulting", "Vulnerability Assessment"],
     bio: "Security Consultant at Black Duck with expertise in cybersecurity solutions, vulnerability management, and enterprise security architecture.",
-    image: "/judges/monish-gowdru.jpg",
+    image: "/judge1.jpg",
     achievements: "Cybersecurity Expert, Security Consulting",
     social: {
       linkedin: "https://linkedin.com/in/monishgowdru",
@@ -70,7 +70,7 @@ const judges = [
     location: "Seattle, WA",
     expertise: ["Security Engineering", "Cloud Security", "Infrastructure Protection"],
     bio: "Security Engineer at Amazon focused on cloud security and infrastructure protection for AWS services, ensuring robust security for millions of users.",
-    image: "/judges/apoorwa-joshi.jpg",
+    image: "/judge1.jpg",
     achievements: "Cloud Security Expert, AWS Infrastructure",
     social: {
       linkedin: "https://linkedin.com/in/apoorwajoshi",
@@ -89,7 +89,7 @@ const judges = [
     location: "Finland",
     expertise: ["Artificial Intelligence", "Software Development", "Network Technologies"],
     bio: "AI Developer at Nokia working on intelligent network solutions and telecommunications AI applications, driving innovation in network technologies.",
-    image: "/judges/ayush-upadhyay.jpg",
+    image: "/judge1.jpg",
     achievements: "AI Network Solutions, Telecommunications",
     social: {
       linkedin: "https://linkedin.com/in/ayushupadhyay",
@@ -108,7 +108,7 @@ const judges = [
     location: "Punjab, India",
     expertise: ["Artificial Intelligence", "Research", "Academic Projects"],
     bio: "AI Intern at IIT Ropar with focus on cutting-edge AI research and academic innovation projects, contributing to the future of artificial intelligence.",
-    image: "/judges/punya-mittal.jpg",
+    image: "/judge1.jpg",
     achievements: "AI Research, Academic Innovation",
     social: {
       linkedin: "https://linkedin.com/in/punyamittal",
@@ -118,6 +118,25 @@ const judges = [
     color: "from-teal-500 to-cyan-400",
     bgColor: "bg-teal-500/10",
     borderColor: "border-teal-500/30",
+  },
+  {
+    id: 7,
+    name: "Preetham Kaukuntla",
+    title: "Staff Data Scientist",
+    company: "Glassdoor",
+    location: "California, USA",
+    expertise: ["Data Science", "Machine Learning", "Analytics", "Statistical Modeling"],
+    bio: "Staff Data Scientist at Glassdoor with extensive experience in building data-driven solutions, advanced analytics, and machine learning models that impact millions of job seekers and companies worldwide.",
+    image: "/preetham-kaukuntla.jpg",
+    achievements: "Data Science Leadership, ML at Scale",
+    social: {
+      linkedin: "https://www.linkedin.com/in/preetham-kaukuntla-a43841105/",
+      twitter: "https://twitter.com/preethamkaukuntla",
+      website: "https://preethamkaukuntla.dev"
+    },
+    color: "from-emerald-500 to-teal-400",
+    bgColor: "bg-emerald-500/10",
+    borderColor: "border-emerald-500/30",
   },
 ];
 
